@@ -28,9 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageMain = new System.Windows.Forms.TabPage();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
@@ -41,6 +44,12 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.tabPageFilters = new System.Windows.Forms.TabPage();
+            this.splitContainerFilters = new System.Windows.Forms.SplitContainer();
+            this.groupBoxFilters = new System.Windows.Forms.GroupBox();
+            this.radioCfilter = new System.Windows.Forms.RadioButton();
+            this.radioAfilter = new System.Windows.Forms.RadioButton();
+            this.radioNone = new System.Windows.Forms.RadioButton();
+            this.freqDomain = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,6 +65,13 @@
             this.splitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.timeDomain)).BeginInit();
             this.toolStrip.SuspendLayout();
+            this.tabPageFilters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerFilters)).BeginInit();
+            this.splitContainerFilters.Panel1.SuspendLayout();
+            this.splitContainerFilters.Panel2.SuspendLayout();
+            this.splitContainerFilters.SuspendLayout();
+            this.groupBoxFilters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.freqDomain)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -162,22 +178,22 @@
             // 
             this.timeDomain.BorderlineColor = System.Drawing.Color.Black;
             this.timeDomain.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea4.Name = "ChartArea1";
-            this.timeDomain.ChartAreas.Add(chartArea4);
+            chartArea1.Name = "ChartArea1";
+            this.timeDomain.ChartAreas.Add(chartArea1);
             this.timeDomain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timeDomain.Location = new System.Drawing.Point(0, 0);
             this.timeDomain.Name = "timeDomain";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Color = System.Drawing.Color.Blue;
-            series4.Name = "Samples";
-            this.timeDomain.Series.Add(series4);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Color = System.Drawing.Color.Blue;
+            series1.Name = "Samples";
+            this.timeDomain.Series.Add(series1);
             this.timeDomain.Size = new System.Drawing.Size(610, 212);
             this.timeDomain.TabIndex = 2;
             this.timeDomain.Text = "Time domain";
-            title4.Name = "Title1";
-            title4.Text = "Time domain";
-            this.timeDomain.Titles.Add(title4);
+            title1.Name = "Title1";
+            title1.Text = "Time domain";
+            this.timeDomain.Titles.Add(title1);
             // 
             // toolStrip
             // 
@@ -208,6 +224,7 @@
             // 
             // tabPageFilters
             // 
+            this.tabPageFilters.Controls.Add(this.splitContainerFilters);
             this.tabPageFilters.Location = new System.Drawing.Point(4, 22);
             this.tabPageFilters.Name = "tabPageFilters";
             this.tabPageFilters.Padding = new System.Windows.Forms.Padding(3);
@@ -215,6 +232,93 @@
             this.tabPageFilters.TabIndex = 1;
             this.tabPageFilters.Text = "Filters";
             this.tabPageFilters.UseVisualStyleBackColor = true;
+            // 
+            // splitContainerFilters
+            // 
+            this.splitContainerFilters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerFilters.Location = new System.Drawing.Point(3, 3);
+            this.splitContainerFilters.Name = "splitContainerFilters";
+            this.splitContainerFilters.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerFilters.Panel1
+            // 
+            this.splitContainerFilters.Panel1.Controls.Add(this.groupBoxFilters);
+            // 
+            // splitContainerFilters.Panel2
+            // 
+            this.splitContainerFilters.Panel2.Controls.Add(this.freqDomain);
+            this.splitContainerFilters.Size = new System.Drawing.Size(610, 466);
+            this.splitContainerFilters.SplitterDistance = 141;
+            this.splitContainerFilters.TabIndex = 0;
+            // 
+            // groupBoxFilters
+            // 
+            this.groupBoxFilters.Controls.Add(this.radioCfilter);
+            this.groupBoxFilters.Controls.Add(this.radioAfilter);
+            this.groupBoxFilters.Controls.Add(this.radioNone);
+            this.groupBoxFilters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxFilters.Location = new System.Drawing.Point(0, 0);
+            this.groupBoxFilters.Name = "groupBoxFilters";
+            this.groupBoxFilters.Size = new System.Drawing.Size(610, 141);
+            this.groupBoxFilters.TabIndex = 0;
+            this.groupBoxFilters.TabStop = false;
+            this.groupBoxFilters.Text = "Available filters";
+            // 
+            // radioCfilter
+            // 
+            this.radioCfilter.AutoSize = true;
+            this.radioCfilter.Location = new System.Drawing.Point(7, 85);
+            this.radioCfilter.Name = "radioCfilter";
+            this.radioCfilter.Size = new System.Drawing.Size(106, 17);
+            this.radioCfilter.TabIndex = 2;
+            this.radioCfilter.TabStop = true;
+            this.radioCfilter.Text = "C - weighted filter";
+            this.radioCfilter.UseVisualStyleBackColor = true;
+            // 
+            // radioAfilter
+            // 
+            this.radioAfilter.AutoSize = true;
+            this.radioAfilter.Location = new System.Drawing.Point(7, 52);
+            this.radioAfilter.Name = "radioAfilter";
+            this.radioAfilter.Size = new System.Drawing.Size(106, 17);
+            this.radioAfilter.TabIndex = 1;
+            this.radioAfilter.TabStop = true;
+            this.radioAfilter.Text = "A - weighted filter";
+            this.radioAfilter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioAfilter.UseVisualStyleBackColor = true;
+            // 
+            // radioNone
+            // 
+            this.radioNone.AutoSize = true;
+            this.radioNone.Checked = true;
+            this.radioNone.Location = new System.Drawing.Point(7, 20);
+            this.radioNone.Name = "radioNone";
+            this.radioNone.Size = new System.Drawing.Size(51, 17);
+            this.radioNone.TabIndex = 0;
+            this.radioNone.TabStop = true;
+            this.radioNone.Text = "None";
+            this.radioNone.UseVisualStyleBackColor = true;
+            // 
+            // freqDomain
+            // 
+            this.freqDomain.BorderlineColor = System.Drawing.Color.Black;
+            this.freqDomain.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+            chartArea2.Name = "ChartArea1";
+            this.freqDomain.ChartAreas.Add(chartArea2);
+            this.freqDomain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.freqDomain.Location = new System.Drawing.Point(0, 0);
+            this.freqDomain.Name = "freqDomain";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series2.Color = System.Drawing.Color.Blue;
+            series2.Name = "Amplitudes";
+            this.freqDomain.Series.Add(series2);
+            this.freqDomain.Size = new System.Drawing.Size(610, 321);
+            this.freqDomain.TabIndex = 3;
+            this.freqDomain.Text = "Frequency domain";
+            title2.Name = "Title1";
+            title2.Text = "Frequency domain";
+            this.freqDomain.Titles.Add(title2);
             // 
             // menuStrip
             // 
@@ -292,6 +396,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.timeDomain)).EndInit();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
+            this.tabPageFilters.ResumeLayout(false);
+            this.splitContainerFilters.Panel1.ResumeLayout(false);
+            this.splitContainerFilters.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerFilters)).EndInit();
+            this.splitContainerFilters.ResumeLayout(false);
+            this.groupBoxFilters.ResumeLayout(false);
+            this.groupBoxFilters.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.freqDomain)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -318,6 +430,12 @@
         private VU_MeterLibrary.VuMeter vuMeter;
         private System.Windows.Forms.SplitContainer splitContainer;
         private System.Windows.Forms.Label lblNoise;
+        private System.Windows.Forms.SplitContainer splitContainerFilters;
+        private System.Windows.Forms.DataVisualization.Charting.Chart freqDomain;
+        private System.Windows.Forms.GroupBox groupBoxFilters;
+        private System.Windows.Forms.RadioButton radioCfilter;
+        private System.Windows.Forms.RadioButton radioAfilter;
+        private System.Windows.Forms.RadioButton radioNone;
     }
 }
 

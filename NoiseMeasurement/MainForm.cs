@@ -1,4 +1,5 @@
-﻿using NAudio.Wave;
+﻿using AForge.Math;
+using NAudio.Wave;
 using NoiseMeasurement.Calibration;
 using System;
 using System.Windows.Forms;
@@ -14,6 +15,8 @@ namespace NoiseMeasurement
         private short[] wavSamples;
         private int wavSampleRate;
         private int vuMeterCntr;
+
+        private Filters.Filters filters;
 
         public MainForm()
         {
@@ -161,6 +164,19 @@ namespace NoiseMeasurement
             {
                 return;
             }
+
+            freqDomain.Invoke((MethodInvoker)delegate
+            {
+                filters = new Filters.Filters(wavSamples);
+
+                for (int i = 0; i < 22050; i++)
+                {
+                    var freqSample = filters.frequencyDomain[i];
+                    freqDomain.Series["Amplitudes"].Points.AddY(freqSample);
+                }
+
+            });            
+
         }
 
         #endregion
