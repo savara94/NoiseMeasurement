@@ -82,7 +82,8 @@
     <Compile Include="Calibration\CalibrationForm.Designer.cs">
       <DependentUpon>CalibrationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Calibration\SineWaveProvider16.cs" />
+    <Compile Include="SoundProviders\SampledSoundProvider.cs" />
+    <Compile Include="SoundProviders\SineWaveProvider16.cs" />
     <Compile Include="Filters\Filters.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

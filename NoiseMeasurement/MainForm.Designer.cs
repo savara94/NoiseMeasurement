@@ -40,9 +40,6 @@
             this.lblNoise = new System.Windows.Forms.Label();
             this.vuMeter = new VU_MeterLibrary.VuMeter();
             this.timeDomain = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.tabPageFilters = new System.Windows.Forms.TabPage();
             this.splitContainerFilters = new System.Windows.Forms.SplitContainer();
             this.groupBoxFilters = new System.Windows.Forms.GroupBox();
@@ -57,6 +54,9 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calibrateToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnPlay = new System.Windows.Forms.ToolStripButton();
+            this.btnPause = new System.Windows.Forms.ToolStripButton();
             this.tabControl.SuspendLayout();
             this.tabPageMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -64,7 +64,6 @@
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.timeDomain)).BeginInit();
-            this.toolStrip.SuspendLayout();
             this.tabPageFilters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerFilters)).BeginInit();
             this.splitContainerFilters.Panel1.SuspendLayout();
@@ -73,27 +72,29 @@
             this.groupBoxFilters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.freqDomain)).BeginInit();
             this.menuStrip.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
             // 
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tabPageMain);
             this.tabControl.Controls.Add(this.tabPageFilters);
-            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl.Location = new System.Drawing.Point(0, 24);
+            this.tabControl.Location = new System.Drawing.Point(0, 50);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(624, 498);
+            this.tabControl.Size = new System.Drawing.Size(624, 468);
             this.tabControl.TabIndex = 0;
             // 
             // tabPageMain
             // 
             this.tabPageMain.Controls.Add(this.splitContainer);
-            this.tabPageMain.Controls.Add(this.toolStrip);
             this.tabPageMain.Location = new System.Drawing.Point(4, 22);
             this.tabPageMain.Name = "tabPageMain";
             this.tabPageMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMain.Size = new System.Drawing.Size(616, 472);
+            this.tabPageMain.Size = new System.Drawing.Size(616, 442);
             this.tabPageMain.TabIndex = 0;
             this.tabPageMain.Text = "Main";
             this.tabPageMain.UseVisualStyleBackColor = true;
@@ -101,7 +102,7 @@
             // splitContainer
             // 
             this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer.Location = new System.Drawing.Point(3, 28);
+            this.splitContainer.Location = new System.Drawing.Point(3, 3);
             this.splitContainer.Name = "splitContainer";
             this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -113,8 +114,8 @@
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.timeDomain);
-            this.splitContainer.Size = new System.Drawing.Size(610, 441);
-            this.splitContainer.SplitterDistance = 225;
+            this.splitContainer.Size = new System.Drawing.Size(610, 436);
+            this.splitContainer.SplitterDistance = 222;
             this.splitContainer.TabIndex = 4;
             // 
             // lblNoise
@@ -188,39 +189,12 @@
             series1.Color = System.Drawing.Color.Blue;
             series1.Name = "Samples";
             this.timeDomain.Series.Add(series1);
-            this.timeDomain.Size = new System.Drawing.Size(610, 212);
+            this.timeDomain.Size = new System.Drawing.Size(610, 210);
             this.timeDomain.TabIndex = 2;
             this.timeDomain.Text = "Time domain";
             title1.Name = "Title1";
             title1.Text = "Time domain";
             this.timeDomain.Titles.Add(title1);
-            // 
-            // toolStrip
-            // 
-            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2});
-            this.toolStrip.Location = new System.Drawing.Point(3, 3);
-            this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(610, 25);
-            this.toolStrip.TabIndex = 1;
-            this.toolStrip.Text = "toolStrip1";
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Image = global::NoiseMeasurement.Properties.Resources.play1;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton1.Text = "Play";
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.Image = global::NoiseMeasurement.Properties.Resources.pause;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(58, 22);
-            this.toolStripButton2.Text = "Pause";
             // 
             // tabPageFilters
             // 
@@ -228,7 +202,7 @@
             this.tabPageFilters.Location = new System.Drawing.Point(4, 22);
             this.tabPageFilters.Name = "tabPageFilters";
             this.tabPageFilters.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFilters.Size = new System.Drawing.Size(616, 472);
+            this.tabPageFilters.Size = new System.Drawing.Size(616, 442);
             this.tabPageFilters.TabIndex = 1;
             this.tabPageFilters.Text = "Filters";
             this.tabPageFilters.UseVisualStyleBackColor = true;
@@ -247,8 +221,8 @@
             // splitContainerFilters.Panel2
             // 
             this.splitContainerFilters.Panel2.Controls.Add(this.freqDomain);
-            this.splitContainerFilters.Size = new System.Drawing.Size(610, 466);
-            this.splitContainerFilters.SplitterDistance = 141;
+            this.splitContainerFilters.Size = new System.Drawing.Size(610, 436);
+            this.splitContainerFilters.SplitterDistance = 131;
             this.splitContainerFilters.TabIndex = 0;
             // 
             // groupBoxFilters
@@ -259,7 +233,7 @@
             this.groupBoxFilters.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxFilters.Location = new System.Drawing.Point(0, 0);
             this.groupBoxFilters.Name = "groupBoxFilters";
-            this.groupBoxFilters.Size = new System.Drawing.Size(610, 141);
+            this.groupBoxFilters.Size = new System.Drawing.Size(610, 131);
             this.groupBoxFilters.TabIndex = 0;
             this.groupBoxFilters.TabStop = false;
             this.groupBoxFilters.Text = "Available filters";
@@ -274,6 +248,7 @@
             this.radioCfilter.TabStop = true;
             this.radioCfilter.Text = "C - weighted filter";
             this.radioCfilter.UseVisualStyleBackColor = true;
+            this.radioCfilter.CheckedChanged += new System.EventHandler(this.radio_CheckedChanged);
             // 
             // radioAfilter
             // 
@@ -286,6 +261,7 @@
             this.radioAfilter.Text = "A - weighted filter";
             this.radioAfilter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioAfilter.UseVisualStyleBackColor = true;
+            this.radioAfilter.CheckedChanged += new System.EventHandler(this.radio_CheckedChanged);
             // 
             // radioNone
             // 
@@ -298,6 +274,7 @@
             this.radioNone.TabStop = true;
             this.radioNone.Text = "None";
             this.radioNone.UseVisualStyleBackColor = true;
+            this.radioNone.CheckedChanged += new System.EventHandler(this.radio_CheckedChanged);
             // 
             // freqDomain
             // 
@@ -313,7 +290,7 @@
             series2.Color = System.Drawing.Color.Blue;
             series2.Name = "Amplitudes";
             this.freqDomain.Series.Add(series2);
-            this.freqDomain.Size = new System.Drawing.Size(610, 321);
+            this.freqDomain.Size = new System.Drawing.Size(610, 301);
             this.freqDomain.TabIndex = 3;
             this.freqDomain.Text = "Frequency domain";
             title2.Name = "Title1";
@@ -374,28 +351,58 @@
             this.calibrateToolStripMenuItem1.Text = "Calibrate";
             this.calibrateToolStripMenuItem1.Click += new System.EventHandler(this.calibrateToolStripMenuItem_Click);
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnPlay,
+            this.btnPause});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(624, 25);
+            this.toolStrip1.TabIndex = 3;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // btnPlay
+            // 
+            this.btnPlay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPlay.Image = global::NoiseMeasurement.Properties.Resources.play1;
+            this.btnPlay.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(23, 22);
+            this.btnPlay.Text = "Play";
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
+            // 
+            // btnPause
+            // 
+            this.btnPause.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPause.Image = global::NoiseMeasurement.Properties.Resources.pause;
+            this.btnPause.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(23, 22);
+            this.btnPause.Text = "Pause";
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 522);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.MinimumSize = new System.Drawing.Size(640, 560);
             this.Name = "MainForm";
             this.Text = "NoiseMeasurement";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.tabControl.ResumeLayout(false);
             this.tabPageMain.ResumeLayout(false);
-            this.tabPageMain.PerformLayout();
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel1.PerformLayout();
             this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.timeDomain)).EndInit();
-            this.toolStrip.ResumeLayout(false);
-            this.toolStrip.PerformLayout();
             this.tabPageFilters.ResumeLayout(false);
             this.splitContainerFilters.Panel1.ResumeLayout(false);
             this.splitContainerFilters.Panel2.ResumeLayout(false);
@@ -406,6 +413,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.freqDomain)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -423,9 +432,6 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem calibrateToolStripMenuItem1;
-        private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.DataVisualization.Charting.Chart timeDomain;
         private VU_MeterLibrary.VuMeter vuMeter;
         private System.Windows.Forms.SplitContainer splitContainer;
@@ -436,6 +442,9 @@
         private System.Windows.Forms.RadioButton radioCfilter;
         private System.Windows.Forms.RadioButton radioAfilter;
         private System.Windows.Forms.RadioButton radioNone;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton btnPlay;
+        private System.Windows.Forms.ToolStripButton btnPause;
     }
 }
 

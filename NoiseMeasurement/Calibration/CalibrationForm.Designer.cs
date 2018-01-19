@@ -119,7 +119,7 @@
             // 
             this.textBoxMaxAmp.Enabled = false;
             this.textBoxMaxAmp.Name = "textBoxMaxAmp";
-            this.textBoxMaxAmp.Size = new System.Drawing.Size(100, 25);
+            this.textBoxMaxAmp.Size = new System.Drawing.Size(100, 23);
             // 
             // textBoxDecibel
             // 

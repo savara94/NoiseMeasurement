@@ -1,6 +1,8 @@
 ﻿using AForge.Math;
+using MathNet.Numerics;
 using NAudio.Wave;
 using NoiseMeasurement.Calibration;
+using NoiseMeasurement.SoundProviders;
 using System;
 using System.Windows.Forms;
 
@@ -9,19 +11,34 @@ namespace NoiseMeasurement
     public partial class MainForm : Form
     {
         private int TIMEDOMAIN_MAXPOINTS = 10000;
+
+        private WaveOut waveOut;
         private Recording.Recording recording;
         private CalibrationParams CalibrationParams;
 
         private short[] wavSamples;
         private int wavSampleRate;
         private int vuMeterCntr;
+        private short[] toBePlayed;
 
         private Filters.Filters filters;
+
+        private void InitializeWaveOut()
+        {
+            waveOut = new WaveOut();
+        }
+
+        private void DeinitializeWaveOut()
+        {
+            waveOut.Stop();
+            waveOut.Dispose();
+            waveOut = null;
+        }
 
         public MainForm()
         {
             InitializeComponent();
-
+            InitializeWaveOut();
             recording = new Recording.Recording(4);
             recording.OnDataAvaliable += UpdateTimeDomain;
             recording.OnDataAvaliable += UpdateVUMeter;
@@ -32,6 +49,9 @@ namespace NoiseMeasurement
                 Noise = (double)Properties.Settings.Default["calibration_noise"]
             };
 
+            freqDomain.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            freqDomain.ChartAreas[0].CursorX.AutoScroll = true;
+            freqDomain.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             timeDomain.ChartAreas[0].AxisY.Maximum = short.MaxValue;
             timeDomain.ChartAreas[0].AxisY.Minimum = short.MinValue;
 
@@ -165,21 +185,77 @@ namespace NoiseMeasurement
                 return;
             }
 
-            freqDomain.Invoke((MethodInvoker)delegate
-            {
-                filters = new Filters.Filters(wavSamples);
-
-                for (int i = 0; i < 22050; i++)
-                {
-                    var freqSample = filters.frequencyDomain[i];
-                    freqDomain.Series["Amplitudes"].Points.AddY(freqSample);
-                }
-
-            });            
-
+            filters = new Filters.Filters(wavSamples);
+            UpdateFreqDomain(filters.frequencyDomain);
+            toBePlayed = filters.input;
         }
 
         #endregion
 
+        private void UpdateFreqDomain(Complex32[] freq)
+        {
+            freqDomain.Invoke((MethodInvoker)delegate
+            {
+                freqDomain.Series["Amplitudes"].Points.Clear();
+                for (int i = 0; i < 22050; i++)
+                {
+                    var freqSample = freq[i].Magnitude;
+                    freqDomain.Series["Amplitudes"].Points.AddY(freqSample);
+                }
+            });
+        }
+
+        private void radio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is RadioButton)
+            {
+                var btn = sender as RadioButton;
+                if (!btn.Checked)
+                {
+                    return;
+                }
+
+                if (ReferenceEquals(btn, radioNone))
+                {
+                    UpdateFreqDomain(filters.frequencyDomain);
+                    toBePlayed = filters.input;
+                }
+                else if (ReferenceEquals(btn, radioAfilter))
+                {
+                    UpdateFreqDomain(filters.AWeightedFreq);
+                    toBePlayed = filters.AWeightedOutput;
+                }
+                else if (ReferenceEquals(btn, radioCfilter))
+                {
+                    UpdateFreqDomain(filters.CWeightedFreq);
+                    toBePlayed = filters.CWeightedOutput;
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            waveOut.Init(new SampledSoundProvider(toBePlayed));
+            waveOut.Play();
+            btnPlay.Enabled = false;
+            btnPause.Enabled = true;
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            DeinitializeWaveOut();
+            btnPause.Enabled = false;
+            btnPlay.Enabled = true;
+            InitializeWaveOut();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DeinitializeWaveOut();
+        }
     }
 }
