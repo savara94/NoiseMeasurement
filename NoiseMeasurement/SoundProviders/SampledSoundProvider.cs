@@ -19,14 +19,21 @@ namespace NoiseMeasurement.SoundProviders
 
         public override int Read(short[] buffer, int offset, int sampleCount)
         {
-            int sampleRate = WaveFormat.SampleRate;
-            for (int n = 0; n < sampleCount; n++)
+            if (sample >= samples.Length)
             {
-                buffer[n + offset] = samples[n + offset];
-                sample++;
-                if (sample >= sampleRate) sample = 0;
+                return 0;
             }
-            return sampleCount;
+
+            int sampleRate = WaveFormat.SampleRate;
+            int n = 0;
+            for (n = 0; n < sampleCount; n++)
+            {
+                buffer[n + offset] = samples[sample];
+                sample++;
+                if (sample >= samples.Length) break;
+            }
+
+            return n;
         }
     }
 }

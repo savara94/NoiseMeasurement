@@ -82,6 +82,9 @@
     <Compile Include="Calibration\CalibrationForm.Designer.cs">
       <DependentUpon>CalibrationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Filters\Filters.Utils.cs" />
+    <Compile Include="Filters\Filters.OctaveBands.cs" />
+    <Compile Include="Filters\Filters.Weighted.cs" />
     <Compile Include="SoundProviders\SampledSoundProvider.cs" />
     <Compile Include="SoundProviders\SineWaveProvider16.cs" />
     <Compile Include="Filters\Filters.cs" />

@@ -28,19 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title7 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title8 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Title title6 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title5 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageMain = new System.Windows.Forms.TabPage();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.lblNoise = new System.Windows.Forms.Label();
             this.vuMeter = new VU_MeterLibrary.VuMeter();
             this.timeDomain = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.tabPageFilters = new System.Windows.Forms.TabPage();
+            this.tabPageWeightFilters = new System.Windows.Forms.TabPage();
             this.splitContainerFilters = new System.Windows.Forms.SplitContainer();
             this.groupBoxFilters = new System.Windows.Forms.GroupBox();
             this.radioCfilter = new System.Windows.Forms.RadioButton();
@@ -54,9 +59,18 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calibrateToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.btnPlay = new System.Windows.Forms.ToolStripButton();
             this.btnPause = new System.Windows.Forms.ToolStripButton();
+            this.tabPageOctaveFilters = new System.Windows.Forms.TabPage();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioBtnThirdOctave = new System.Windows.Forms.RadioButton();
+            this.radioBtnOctave = new System.Windows.Forms.RadioButton();
+            this.octavesVisualisation = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.comboBoxFreq = new System.Windows.Forms.ComboBox();
+            this.lblCenterFrequency = new System.Windows.Forms.Label();
+            this.octaveFreqDomain = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl.SuspendLayout();
             this.tabPageMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -64,7 +78,7 @@
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.timeDomain)).BeginInit();
-            this.tabPageFilters.SuspendLayout();
+            this.tabPageWeightFilters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerFilters)).BeginInit();
             this.splitContainerFilters.Panel1.SuspendLayout();
             this.splitContainerFilters.Panel2.SuspendLayout();
@@ -72,7 +86,15 @@
             this.groupBoxFilters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.freqDomain)).BeginInit();
             this.menuStrip.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.toolStrip.SuspendLayout();
+            this.tabPageOctaveFilters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.octavesVisualisation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.octaveFreqDomain)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -81,7 +103,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tabPageMain);
-            this.tabControl.Controls.Add(this.tabPageFilters);
+            this.tabControl.Controls.Add(this.tabPageWeightFilters);
+            this.tabControl.Controls.Add(this.tabPageOctaveFilters);
             this.tabControl.Location = new System.Drawing.Point(0, 50);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -179,33 +202,33 @@
             // 
             this.timeDomain.BorderlineColor = System.Drawing.Color.Black;
             this.timeDomain.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea1.Name = "ChartArea1";
-            this.timeDomain.ChartAreas.Add(chartArea1);
+            chartArea7.Name = "ChartArea1";
+            this.timeDomain.ChartAreas.Add(chartArea7);
             this.timeDomain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timeDomain.Location = new System.Drawing.Point(0, 0);
             this.timeDomain.Name = "timeDomain";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Color = System.Drawing.Color.Blue;
-            series1.Name = "Samples";
-            this.timeDomain.Series.Add(series1);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series5.Color = System.Drawing.Color.Blue;
+            series5.Name = "Samples";
+            this.timeDomain.Series.Add(series5);
             this.timeDomain.Size = new System.Drawing.Size(610, 210);
             this.timeDomain.TabIndex = 2;
             this.timeDomain.Text = "Time domain";
-            title1.Name = "Title1";
-            title1.Text = "Time domain";
-            this.timeDomain.Titles.Add(title1);
+            title7.Name = "Title1";
+            title7.Text = "Time domain";
+            this.timeDomain.Titles.Add(title7);
             // 
-            // tabPageFilters
+            // tabPageWeightFilters
             // 
-            this.tabPageFilters.Controls.Add(this.splitContainerFilters);
-            this.tabPageFilters.Location = new System.Drawing.Point(4, 22);
-            this.tabPageFilters.Name = "tabPageFilters";
-            this.tabPageFilters.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFilters.Size = new System.Drawing.Size(616, 442);
-            this.tabPageFilters.TabIndex = 1;
-            this.tabPageFilters.Text = "Filters";
-            this.tabPageFilters.UseVisualStyleBackColor = true;
+            this.tabPageWeightFilters.Controls.Add(this.splitContainerFilters);
+            this.tabPageWeightFilters.Location = new System.Drawing.Point(4, 22);
+            this.tabPageWeightFilters.Name = "tabPageWeightFilters";
+            this.tabPageWeightFilters.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageWeightFilters.Size = new System.Drawing.Size(616, 442);
+            this.tabPageWeightFilters.TabIndex = 1;
+            this.tabPageWeightFilters.Text = "Weight filters";
+            this.tabPageWeightFilters.UseVisualStyleBackColor = true;
             // 
             // splitContainerFilters
             // 
@@ -241,7 +264,7 @@
             // radioCfilter
             // 
             this.radioCfilter.AutoSize = true;
-            this.radioCfilter.Location = new System.Drawing.Point(7, 85);
+            this.radioCfilter.Location = new System.Drawing.Point(7, 89);
             this.radioCfilter.Name = "radioCfilter";
             this.radioCfilter.Size = new System.Drawing.Size(106, 17);
             this.radioCfilter.TabIndex = 2;
@@ -253,7 +276,7 @@
             // radioAfilter
             // 
             this.radioAfilter.AutoSize = true;
-            this.radioAfilter.Location = new System.Drawing.Point(7, 52);
+            this.radioAfilter.Location = new System.Drawing.Point(7, 56);
             this.radioAfilter.Name = "radioAfilter";
             this.radioAfilter.Size = new System.Drawing.Size(106, 17);
             this.radioAfilter.TabIndex = 1;
@@ -267,7 +290,7 @@
             // 
             this.radioNone.AutoSize = true;
             this.radioNone.Checked = true;
-            this.radioNone.Location = new System.Drawing.Point(7, 20);
+            this.radioNone.Location = new System.Drawing.Point(7, 24);
             this.radioNone.Name = "radioNone";
             this.radioNone.Size = new System.Drawing.Size(51, 17);
             this.radioNone.TabIndex = 0;
@@ -280,22 +303,22 @@
             // 
             this.freqDomain.BorderlineColor = System.Drawing.Color.Black;
             this.freqDomain.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea2.Name = "ChartArea1";
-            this.freqDomain.ChartAreas.Add(chartArea2);
+            chartArea8.Name = "ChartArea1";
+            this.freqDomain.ChartAreas.Add(chartArea8);
             this.freqDomain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.freqDomain.Location = new System.Drawing.Point(0, 0);
             this.freqDomain.Name = "freqDomain";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series2.Color = System.Drawing.Color.Blue;
-            series2.Name = "Amplitudes";
-            this.freqDomain.Series.Add(series2);
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series6.Color = System.Drawing.Color.Blue;
+            series6.Name = "Amplitudes";
+            this.freqDomain.Series.Add(series6);
             this.freqDomain.Size = new System.Drawing.Size(610, 301);
             this.freqDomain.TabIndex = 3;
             this.freqDomain.Text = "Frequency domain";
-            title2.Name = "Title1";
-            title2.Text = "Frequency domain";
-            this.freqDomain.Titles.Add(title2);
+            title8.Name = "Title1";
+            title8.Text = "Frequency domain";
+            this.freqDomain.Titles.Add(title8);
             // 
             // menuStrip
             // 
@@ -351,16 +374,16 @@
             this.calibrateToolStripMenuItem1.Text = "Calibrate";
             this.calibrateToolStripMenuItem1.Click += new System.EventHandler(this.calibrateToolStripMenuItem_Click);
             // 
-            // toolStrip1
+            // toolStrip
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnPlay,
             this.btnPause});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(624, 25);
-            this.toolStrip1.TabIndex = 3;
-            this.toolStrip1.Text = "toolStrip1";
+            this.toolStrip.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip.Name = "toolStrip";
+            this.toolStrip.Size = new System.Drawing.Size(624, 25);
+            this.toolStrip.TabIndex = 3;
+            this.toolStrip.Text = "toolStrip1";
             // 
             // btnPlay
             // 
@@ -382,12 +405,139 @@
             this.btnPause.Text = "Pause";
             this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             // 
+            // tabPageOctaveFilters
+            // 
+            this.tabPageOctaveFilters.Controls.Add(this.splitContainer1);
+            this.tabPageOctaveFilters.Location = new System.Drawing.Point(4, 22);
+            this.tabPageOctaveFilters.Name = "tabPageOctaveFilters";
+            this.tabPageOctaveFilters.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageOctaveFilters.Size = new System.Drawing.Size(616, 442);
+            this.tabPageOctaveFilters.TabIndex = 2;
+            this.tabPageOctaveFilters.Text = "Octave band filters";
+            this.tabPageOctaveFilters.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.octavesVisualisation);
+            this.splitContainer1.Size = new System.Drawing.Size(610, 436);
+            this.splitContainer1.SplitterDistance = 131;
+            this.splitContainer1.TabIndex = 1;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.octaveFreqDomain);
+            this.groupBox1.Controls.Add(this.lblCenterFrequency);
+            this.groupBox1.Controls.Add(this.comboBoxFreq);
+            this.groupBox1.Controls.Add(this.radioBtnThirdOctave);
+            this.groupBox1.Controls.Add(this.radioBtnOctave);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(610, 131);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Available filters";
+            // 
+            // radioBtnThirdOctave
+            // 
+            this.radioBtnThirdOctave.AutoSize = true;
+            this.radioBtnThirdOctave.Location = new System.Drawing.Point(6, 59);
+            this.radioBtnThirdOctave.Name = "radioBtnThirdOctave";
+            this.radioBtnThirdOctave.Size = new System.Drawing.Size(107, 17);
+            this.radioBtnThirdOctave.TabIndex = 1;
+            this.radioBtnThirdOctave.TabStop = true;
+            this.radioBtnThirdOctave.Text = "1/3 Octave band";
+            this.radioBtnThirdOctave.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioBtnThirdOctave.UseVisualStyleBackColor = true;
+            this.radioBtnThirdOctave.CheckedChanged += new System.EventHandler(this.radio_CheckedChanged);
+            // 
+            // radioBtnOctave
+            // 
+            this.radioBtnOctave.AutoSize = true;
+            this.radioBtnOctave.Checked = true;
+            this.radioBtnOctave.Location = new System.Drawing.Point(6, 27);
+            this.radioBtnOctave.Name = "radioBtnOctave";
+            this.radioBtnOctave.Size = new System.Drawing.Size(87, 17);
+            this.radioBtnOctave.TabIndex = 0;
+            this.radioBtnOctave.TabStop = true;
+            this.radioBtnOctave.Text = "Octave band";
+            this.radioBtnOctave.UseVisualStyleBackColor = true;
+            this.radioBtnOctave.CheckedChanged += new System.EventHandler(this.radio_CheckedChanged);
+            // 
+            // octavesVisualisation
+            // 
+            this.octavesVisualisation.BorderlineColor = System.Drawing.Color.Black;
+            this.octavesVisualisation.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+            chartArea6.Name = "ChartArea1";
+            this.octavesVisualisation.ChartAreas.Add(chartArea6);
+            this.octavesVisualisation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.octavesVisualisation.Location = new System.Drawing.Point(0, 0);
+            this.octavesVisualisation.Name = "octavesVisualisation";
+            this.octavesVisualisation.Size = new System.Drawing.Size(610, 301);
+            this.octavesVisualisation.TabIndex = 3;
+            this.octavesVisualisation.Text = "Octave visualisation";
+            title6.Name = "Octaves";
+            title6.Text = "Octaves";
+            this.octavesVisualisation.Titles.Add(title6);
+            // 
+            // comboBoxFreq
+            // 
+            this.comboBoxFreq.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFreq.FormattingEnabled = true;
+            this.comboBoxFreq.Location = new System.Drawing.Point(110, 86);
+            this.comboBoxFreq.Name = "comboBoxFreq";
+            this.comboBoxFreq.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxFreq.TabIndex = 2;
+            this.comboBoxFreq.SelectedIndexChanged += new System.EventHandler(this.comboBoxFreq_SelectedIndexChanged);
+            // 
+            // lblCenterFrequency
+            // 
+            this.lblCenterFrequency.AutoSize = true;
+            this.lblCenterFrequency.Location = new System.Drawing.Point(4, 89);
+            this.lblCenterFrequency.Name = "lblCenterFrequency";
+            this.lblCenterFrequency.Size = new System.Drawing.Size(91, 13);
+            this.lblCenterFrequency.TabIndex = 3;
+            this.lblCenterFrequency.Text = "Center frequency:";
+            // 
+            // octaveFreqDomain
+            // 
+            this.octaveFreqDomain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.octaveFreqDomain.BorderlineColor = System.Drawing.Color.Black;
+            this.octaveFreqDomain.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+            chartArea5.Name = "ChartArea1";
+            this.octaveFreqDomain.ChartAreas.Add(chartArea5);
+            this.octaveFreqDomain.Location = new System.Drawing.Point(248, 19);
+            this.octaveFreqDomain.Name = "octaveFreqDomain";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series4.Name = "Octave";
+            this.octaveFreqDomain.Series.Add(series4);
+            this.octaveFreqDomain.Size = new System.Drawing.Size(356, 106);
+            this.octaveFreqDomain.TabIndex = 4;
+            this.octaveFreqDomain.Text = "Octave";
+            title5.Name = "Octave band";
+            title5.Text = "Frequency domain";
+            this.octaveFreqDomain.Titles.Add(title5);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 522);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
@@ -403,7 +553,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.timeDomain)).EndInit();
-            this.tabPageFilters.ResumeLayout(false);
+            this.tabPageWeightFilters.ResumeLayout(false);
             this.splitContainerFilters.Panel1.ResumeLayout(false);
             this.splitContainerFilters.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerFilters)).EndInit();
@@ -413,8 +563,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.freqDomain)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.toolStrip.ResumeLayout(false);
+            this.toolStrip.PerformLayout();
+            this.tabPageOctaveFilters.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.octavesVisualisation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.octaveFreqDomain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -424,7 +583,7 @@
 
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPageMain;
-        private System.Windows.Forms.TabPage tabPageFilters;
+        private System.Windows.Forms.TabPage tabPageWeightFilters;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
@@ -442,9 +601,18 @@
         private System.Windows.Forms.RadioButton radioCfilter;
         private System.Windows.Forms.RadioButton radioAfilter;
         private System.Windows.Forms.RadioButton radioNone;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip toolStrip;
         private System.Windows.Forms.ToolStripButton btnPlay;
         private System.Windows.Forms.ToolStripButton btnPause;
+        private System.Windows.Forms.TabPage tabPageOctaveFilters;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton radioBtnThirdOctave;
+        private System.Windows.Forms.RadioButton radioBtnOctave;
+        private System.Windows.Forms.DataVisualization.Charting.Chart octavesVisualisation;
+        private System.Windows.Forms.ComboBox comboBoxFreq;
+        private System.Windows.Forms.Label lblCenterFrequency;
+        private System.Windows.Forms.DataVisualization.Charting.Chart octaveFreqDomain;
     }
 }
 

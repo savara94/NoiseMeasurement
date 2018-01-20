@@ -26,6 +26,13 @@ namespace NoiseMeasurement
         private void InitializeWaveOut()
         {
             waveOut = new WaveOut();
+            waveOut.PlaybackStopped += WaveOut_PlaybackStopped;
+        }
+
+        private void WaveOut_PlaybackStopped(object sender, StoppedEventArgs e)
+        {
+            btnPlay.Enabled = true;
+            btnPause.Enabled = false;
         }
 
         private void DeinitializeWaveOut()
@@ -52,6 +59,11 @@ namespace NoiseMeasurement
             freqDomain.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
             freqDomain.ChartAreas[0].CursorX.AutoScroll = true;
             freqDomain.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
+
+            octaveFreqDomain.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            octaveFreqDomain.ChartAreas[0].CursorX.AutoScroll = true;
+            octaveFreqDomain.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
+
             timeDomain.ChartAreas[0].AxisY.Maximum = short.MaxValue;
             timeDomain.ChartAreas[0].AxisY.Minimum = short.MinValue;
 
@@ -186,6 +198,7 @@ namespace NoiseMeasurement
             }
 
             filters = new Filters.Filters(wavSamples);
+            FillComboboxFreq(false);
             UpdateFreqDomain(filters.frequencyDomain);
             toBePlayed = filters.input;
         }
@@ -229,12 +242,34 @@ namespace NoiseMeasurement
                 {
                     UpdateFreqDomain(filters.CWeightedFreq);
                     toBePlayed = filters.CWeightedOutput;
+
+                }
+                else if (ReferenceEquals(btn, radioBtnOctave))
+                {
+                    FillComboboxFreq(false);
+                }
+                else if (ReferenceEquals(btn, radioBtnThirdOctave))
+                {
+                    FillComboboxFreq(true);
                 }
             }
             else
             {
                 return;
             }
+        }
+
+        private void UpdateOctaveFreqDomain(Complex32[] freq)
+        {
+            octaveFreqDomain.Invoke((MethodInvoker)delegate
+            {
+                octaveFreqDomain.Series["Octave"].Points.Clear();
+                for (int i = 0; i < 22050; i++)
+                {
+                    var freqSample = freq[i].Magnitude;
+                    octaveFreqDomain.Series["Octave"].Points.AddY(freqSample);
+                }
+            });
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
@@ -256,6 +291,27 @@ namespace NoiseMeasurement
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             DeinitializeWaveOut();
+        }
+
+        private void FillComboboxFreq(bool thirdOctave)
+        {
+            comboBoxFreq.Items.Clear();
+            float[] frequencies = thirdOctave ? Filters.Filters.ThirdOctaveBandCenterFrequencies : Filters.Filters.OctaveBandCenterFrequencies;
+
+            foreach(var freq in frequencies)
+            {
+                comboBoxFreq.Items.Add(freq + " Hz");
+            }
+
+            comboBoxFreq.SelectedIndex = 0;
+        }
+
+        private void comboBoxFreq_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Complex32[][] freq = radioBtnThirdOctave.Checked ? filters.ThirdOctaveBandFreqs : filters.OctaveBandFreqs;
+            var band = comboBoxFreq.SelectedIndex;
+            toBePlayed = radioBtnThirdOctave.Checked ? filters.ThirdOctaveBandOutput[band] : filters.OctaveBandOutput[band];
+            UpdateOctaveFreqDomain(freq[band]);
         }
     }
 }
