@@ -1,10 +1,18 @@
 ﻿using AForge.Math;
+using GMap.NET;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
 using MathNet.Numerics;
 using NAudio.Wave;
 using NoiseMeasurement.Calibration;
+using NoiseMeasurement.DB;
 using NoiseMeasurement.SoundProviders;
 using System;
+using System.Device.Location;
+using System.Net;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace NoiseMeasurement
 {
@@ -22,6 +30,13 @@ namespace NoiseMeasurement
         private short[] toBePlayed;
 
         private Filters.Filters filters;
+        private Averaging.TimeAveraging timeAveraging;
+        private PointLatLng deviceGeoLocation;
+        private DBUpdater dbUpdater;
+        private bool IsDeviceSelected;
+        private PointLatLng SelectedDeviceLocation;
+        private DateTime timestampForDbUpdate;
+        private GMapOverlay markersOverlay;
 
         private void InitializeWaveOut()
         {
@@ -46,9 +61,23 @@ namespace NoiseMeasurement
         {
             InitializeComponent();
             InitializeWaveOut();
+            double lat, lng;
+            GetLatLong(out lat, out lng);
+            if (lat == -1 && lng == -1)
+            {
+                gMap.Enabled = false;
+                return;
+            }
+            deviceGeoLocation = new PointLatLng(lat, lng);
+            SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
+            dbUpdater = new DBUpdater(deviceGeoLocation);
+            InitializeGMap();
             recording = new Recording.Recording(4);
+            timeAveraging = new Averaging.TimeAveraging(lblLavgValue, lblTWAValue, lblDoseValue);
+            comboBoxTimeWeight.SelectedIndex = 0;
             recording.OnDataAvaliable += UpdateTimeDomain;
             recording.OnDataAvaliable += UpdateVUMeter;
+            recording.OnDataAvaliable += timeAveraging.GatherNewData;
 
             CalibrationParams = new CalibrationParams
             {
@@ -108,8 +137,15 @@ namespace NoiseMeasurement
 
             lblNoise.Invoke((MethodInvoker)delegate
             {
-               lblNoise.Text = ((int)(measured_noise)).ToString();
+                lblNoise.Text = ((int)(measured_noise)).ToString();
             });
+
+            lblLeqValue.Invoke((MethodInvoker)delegate
+            {
+                lblLeqValue.Text = ((int)(measured_noise)).ToString() + " dB";
+            });
+
+            dbUpdater.InsertReading(measured_noise);
         }
 
         #region Calibration
@@ -143,6 +179,13 @@ namespace NoiseMeasurement
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
+                if (reader.WaveFormat.SampleRate != 44100)
+                {
+                    MessageBox.Show("Only 44.1kHz sample rate is allowed!", "Unsupported file",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
                 wavSampleRate = reader.WaveFormat.SampleRate;
                 bool stereo = false;
 
@@ -298,7 +341,7 @@ namespace NoiseMeasurement
             comboBoxFreq.Items.Clear();
             float[] frequencies = thirdOctave ? Filters.Filters.ThirdOctaveBandCenterFrequencies : Filters.Filters.OctaveBandCenterFrequencies;
 
-            foreach(var freq in frequencies)
+            foreach (var freq in frequencies)
             {
                 comboBoxFreq.Items.Add(freq + " Hz");
             }
@@ -312,6 +355,115 @@ namespace NoiseMeasurement
             var band = comboBoxFreq.SelectedIndex;
             toBePlayed = radioBtnThirdOctave.Checked ? filters.ThirdOctaveBandOutput[band] : filters.OctaveBandOutput[band];
             UpdateOctaveFreqDomain(freq[band]);
+        }
+
+        private void comboBoxTimeWeight_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            timeAveraging.TimeWeightIndex = comboBoxTimeWeight.SelectedIndex;
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void InitializeGMap()
+        {
+            gMap.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
+            GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
+            gMap.DragButton = MouseButtons.Left;
+            gMap.Position = deviceGeoLocation;
+            GetDevicesLocations();
+        }
+
+        private void GetDevicesLocations()
+        {
+            var locations = dbUpdater.GetDeviceLocations();
+            foreach (var location in locations)
+            {
+                markersOverlay = new GMapOverlay("markers");
+                GMarkerGoogle marker = new GMarkerGoogle(deviceGeoLocation, GMarkerGoogleType.red);
+                marker.ToolTipText = "Click to show device readings.";
+                markersOverlay.Markers.Add(marker);
+                gMap.Overlays.Add(markersOverlay);
+            }
+        }
+
+        private void GetLatLong(out double lat, out double lng)
+        {
+            string url = "http://ip-api.com/xml";
+            WebRequest request = WebRequest.Create(url);
+            try
+            {
+                WebResponse response = request.GetResponse();
+                using (var sr = new System.IO.StreamReader(response.GetResponseStream()))
+                {
+                    XDocument xmlDoc = new XDocument();
+                    try
+                    {
+                        xmlDoc = XDocument.Parse(sr.ReadToEnd());
+                        string status = xmlDoc.Root.Element("status").Value;
+                        Console.WriteLine("Response status: {0}", status);
+                        if (status == "success")
+                        {
+                            lat = double.Parse(xmlDoc.Root.Element("lat").Value);
+                            lng = double.Parse(xmlDoc.Root.Element("lon").Value);
+                            return;
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+            }
+            catch (WebException)
+            {
+
+            }
+
+            lat = -1;
+            lng = -1;
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            if (!IsDeviceSelected)
+            {
+                timestampForDbUpdate = DateTime.MinValue;
+                return;
+            }
+            var readings = dbUpdater.GetNewReadings(SelectedDeviceLocation, timestampForDbUpdate);
+
+            sensorReadings.Invoke((MethodInvoker)delegate
+            {
+                var points = sensorReadings.Series["Readings"].Points;
+                foreach (var reading in readings)
+                {
+                   if (points.Count == 10000)
+                    {
+                        points.RemoveAt(0);
+                    }
+                   points.AddY(reading);
+                }
+            });
+
+            timestampForDbUpdate = DateTime.Now;
+        }
+
+        private void gMap_MouseClick(object sender, MouseEventArgs e)
+        {
+            foreach (var marker in markersOverlay.Markers)
+            {
+                if (marker.IsMouseOver)
+                {
+                    IsDeviceSelected = true;
+                    SelectedDeviceLocation = marker.Position;
+                    sensorReadings.Series["Readings"].Points.Clear();
+                    timestampForDbUpdate = DateTime.MinValue;
+                    break;
+                }
+            }
         }
     }
 }

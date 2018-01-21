@@ -35,11 +35,10 @@ namespace NoiseMeasurement.Recording
 
         public Recording(int moduo)
         {
-            this.waveIn = new WaveInEvent();
+            waveIn = new WaveInEvent();
             this.IsRecording = false;
             this.moduo = moduo;
 
-            waveIn = new WaveInEvent();
             waveIn.DataAvailable += OnAudioDataAvailable;
         }
 
