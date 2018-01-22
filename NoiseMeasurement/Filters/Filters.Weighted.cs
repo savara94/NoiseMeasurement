@@ -11,8 +11,8 @@ namespace NoiseMeasurement.Filters
     {
         private void ApplyAWeightedFilter()
         {
-            AWeightedFreq = new Complex32[frequencyDomain.Length];
-            AWeightedOutput = new short[frequencyDomain.Length];
+            AWeightedFreq = new Complex32[FrequencyDomain.Length];
+            AWeightedOutput = new short[FrequencyDomain.Length];
             GenerateFilterOutputs(AWeightedFreq, AWeightedOutput, AWeight);
         }
 
@@ -73,8 +73,8 @@ namespace NoiseMeasurement.Filters
 
         public void ApplyCWeightedFilter()
         {
-            CWeightedFreq = new Complex32[frequencyDomain.Length];
-            CWeightedOutput = new short[frequencyDomain.Length];
+            CWeightedFreq = new Complex32[FrequencyDomain.Length];
+            CWeightedOutput = new short[FrequencyDomain.Length];
             GenerateFilterOutputs(CWeightedFreq, CWeightedOutput, CWeight);
         }
     }

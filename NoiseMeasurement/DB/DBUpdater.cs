@@ -19,7 +19,7 @@ namespace NoiseMeasurement.DB
         {
             double lat = location.Lat;
             double lng = location.Lng;
-            string wkt = $"POINT({lat} {lng})";
+            string wkt = $"POINT({lng} {lat})";
             DbGeography gpslocation = DbGeography.FromText(wkt);
             List<GeoLocation> geoLocationSuggestions;
             thisDeviceLocation = location;
@@ -83,7 +83,7 @@ namespace NoiseMeasurement.DB
             list = context.GeoLocations.ToList();
             double lat = deviceLocation.Lat;
             double lng = deviceLocation.Lng;
-            string wkt = $"POINT({lat} {lng})";
+            string wkt = $"POINT({lng} {lat})";
 
             DbGeography selectedLocation = DbGeography.FromText(wkt);
             List<GeoLocation> wantedLocation = (from location in list

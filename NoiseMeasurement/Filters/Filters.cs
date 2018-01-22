@@ -11,25 +11,111 @@ namespace NoiseMeasurement.Filters
     public partial class Filters
     {
         public short[] input;
-        public short[] AWeightedOutput;
-        public short[] CWeightedOutput;
-        public short[][] OctaveBandOutput;
-        public short[][] ThirdOctaveBandOutput;
+        private short[] AWeightedOutput;
+        private short[] CWeightedOutput;
+        private short[][] OctaveBandOutput;
+        private short[][] ThirdOctaveBandOutput;
 
-        public Complex32[] frequencyDomain;
-        public Complex32[][] OctaveBandFreqs;
-        public Complex32[][] ThirdOctaveBandFreqs;
-        public Complex32[] AWeightedFreq;
-        public Complex32[] CWeightedFreq;
+        public Complex32[] FrequencyDomain;
+        private Complex32[][] OctaveBandFreqs;
+        private Complex32[][] ThirdOctaveBandFreqs;
+        private Complex32[] AWeightedFreq;
+        private Complex32[] CWeightedFreq;
 
         private delegate float filter(float freq);
 
+        public short[] AWeightFilterOutput
+        {
+            get
+            {
+                if (AWeightedOutput == null)
+                {
+                    ApplyAWeightedFilter();
+                }
+
+                return AWeightedOutput;
+            }
+        }
+
+        public short[] CWeightFilterOutput
+        {
+            get
+            {
+                if (CWeightedOutput == null)
+                {
+                    ApplyCWeightedFilter();
+                }
+
+                return CWeightedOutput;
+            }
+        }
+
+        public Complex32[] AWeightFilterFrequency
+        {
+            get
+            {
+                if (AWeightedFreq == null)
+                {
+                    ApplyAWeightedFilter();
+                }
+
+                return AWeightedFreq;
+            }
+        }
+
+        public Complex32[] CWeightFilterFrequency
+        {
+            get
+            {
+                if (CWeightedFreq == null)
+                {
+                    ApplyCWeightedFilter();
+                }
+
+                return CWeightedFreq;
+            }
+        }
+
+        public short[] GetOctaveFilterOutput(int band, bool thirdOctave)
+        {
+            short[][] ptr = thirdOctave ? ThirdOctaveBandOutput : OctaveBandOutput;
+            if (ptr[band] == null)
+            {
+                ApplyOctaveBandFilter(band, thirdOctave);
+            }
+
+            return ptr[band];
+        }
+
+        public Complex32[] GetOctaveFilterFrequency(int band, bool thirdOctave)
+        {
+            Complex32[][] ptr = thirdOctave ? ThirdOctaveBandFreqs : OctaveBandFreqs;
+            if (ptr[band] == null)
+            {
+                ApplyOctaveBandFilter(band, thirdOctave);
+            }
+
+            return ptr[band];
+        }
+
+        public Filters(short[] input)
+        {
+            this.input = input;
+            ThirdOctaveBandFreqs = new Complex32[ThirdOctaveBandCenterFrequencies.Length][];
+            ThirdOctaveBandOutput = new short[ThirdOctaveBandCenterFrequencies.Length][];
+
+            OctaveBandFreqs = new Complex32[ThirdOctaveBandCenterFrequencies.Length][];
+            OctaveBandOutput = new short[ThirdOctaveBandCenterFrequencies.Length][];
+
+            FrequencyDomain = GetFrequencyDomain(input);
+        }
+
         private void GenerateFilterOutputs(Complex32[] frequencies, short[] timeDomainSamples, filter filter)
         {
-            for (int i = 1; i < AWeightedFreq.Length; i++)
+            for (int i = 1; i < frequencies.Length; i++)
             {
                 float scale = filter(i);
-                frequencies[i] = new Complex32(scale* frequencyDomain[i].Real, scale * frequencyDomain[i].Imaginary);
+                frequencies[i] = new Complex32(scale* FrequencyDomain[i].Real, scale * FrequencyDomain[i].Imaginary);
             }
 
             Complex32[] inverseinput = new Complex32[frequencies.Length];
@@ -86,19 +172,6 @@ namespace NoiseMeasurement.Filters
             {
                 ApplyOctaveBandFilter(i, true);
             }
-        }
-
-        public Filters(short[] input)
-        {
-            this.input = input;
-            ThirdOctaveBandFreqs = new Complex32[ThirdOctaveBandCenterFrequencies.Length][];
-            ThirdOctaveBandOutput = new short[ThirdOctaveBandCenterFrequencies.Length][];
-
-            OctaveBandFreqs = new Complex32[ThirdOctaveBandCenterFrequencies.Length][];
-            OctaveBandOutput = new short[ThirdOctaveBandCenterFrequencies.Length][];
-
-            frequencyDomain = GetFrequencyDomain(input);
-            ExecuteFilters();
         }
     }
 }

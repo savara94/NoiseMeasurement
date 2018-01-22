@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea21 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title21 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea22 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title22 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea24 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title24 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea23 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Title title23 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea25 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title25 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea17 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title17 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea18 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title18 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea19 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series15 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title19 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea16 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Title title16 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea20 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series16 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title20 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageMain = new System.Windows.Forms.TabPage();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
@@ -322,22 +322,22 @@
             // 
             this.timeDomain.BorderlineColor = System.Drawing.Color.Black;
             this.timeDomain.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea21.Name = "ChartArea1";
-            this.timeDomain.ChartAreas.Add(chartArea21);
+            chartArea17.Name = "ChartArea1";
+            this.timeDomain.ChartAreas.Add(chartArea17);
             this.timeDomain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timeDomain.Location = new System.Drawing.Point(0, 0);
             this.timeDomain.Name = "timeDomain";
-            series17.ChartArea = "ChartArea1";
-            series17.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series17.Color = System.Drawing.Color.Blue;
-            series17.Name = "Samples";
-            this.timeDomain.Series.Add(series17);
+            series13.ChartArea = "ChartArea1";
+            series13.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series13.Color = System.Drawing.Color.Blue;
+            series13.Name = "Samples";
+            this.timeDomain.Series.Add(series13);
             this.timeDomain.Size = new System.Drawing.Size(610, 210);
             this.timeDomain.TabIndex = 2;
             this.timeDomain.Text = "Time domain";
-            title21.Name = "Title1";
-            title21.Text = "Time domain";
-            this.timeDomain.Titles.Add(title21);
+            title17.Name = "Title1";
+            title17.Text = "Time domain";
+            this.timeDomain.Titles.Add(title17);
             // 
             // tabPageWeightFilters
             // 
@@ -353,6 +353,7 @@
             // splitContainerFilters
             // 
             this.splitContainerFilters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerFilters.Enabled = false;
             this.splitContainerFilters.Location = new System.Drawing.Point(3, 3);
             this.splitContainerFilters.Name = "splitContainerFilters";
             this.splitContainerFilters.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -423,22 +424,22 @@
             // 
             this.freqDomain.BorderlineColor = System.Drawing.Color.Black;
             this.freqDomain.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea22.Name = "ChartArea1";
-            this.freqDomain.ChartAreas.Add(chartArea22);
+            chartArea18.Name = "ChartArea1";
+            this.freqDomain.ChartAreas.Add(chartArea18);
             this.freqDomain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.freqDomain.Location = new System.Drawing.Point(0, 0);
             this.freqDomain.Name = "freqDomain";
-            series18.ChartArea = "ChartArea1";
-            series18.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series18.Color = System.Drawing.Color.Blue;
-            series18.Name = "Amplitudes";
-            this.freqDomain.Series.Add(series18);
+            series14.ChartArea = "ChartArea1";
+            series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series14.Color = System.Drawing.Color.Blue;
+            series14.Name = "Amplitudes";
+            this.freqDomain.Series.Add(series14);
             this.freqDomain.Size = new System.Drawing.Size(610, 301);
             this.freqDomain.TabIndex = 3;
             this.freqDomain.Text = "Frequency domain";
-            title22.Name = "Title1";
-            title22.Text = "Frequency domain";
-            this.freqDomain.Titles.Add(title22);
+            title18.Name = "Title1";
+            title18.Text = "Frequency domain";
+            this.freqDomain.Titles.Add(title18);
             // 
             // tabPageOctaveFilters
             // 
@@ -454,6 +455,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Enabled = false;
             this.splitContainer1.Location = new System.Drawing.Point(3, 3);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -491,20 +493,20 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.octaveFreqDomain.BorderlineColor = System.Drawing.Color.Black;
             this.octaveFreqDomain.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea24.Name = "ChartArea1";
-            this.octaveFreqDomain.ChartAreas.Add(chartArea24);
+            chartArea19.Name = "ChartArea1";
+            this.octaveFreqDomain.ChartAreas.Add(chartArea19);
             this.octaveFreqDomain.Location = new System.Drawing.Point(248, 19);
             this.octaveFreqDomain.Name = "octaveFreqDomain";
-            series19.ChartArea = "ChartArea1";
-            series19.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series19.Name = "Octave";
-            this.octaveFreqDomain.Series.Add(series19);
+            series15.ChartArea = "ChartArea1";
+            series15.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series15.Name = "Octave";
+            this.octaveFreqDomain.Series.Add(series15);
             this.octaveFreqDomain.Size = new System.Drawing.Size(356, 106);
             this.octaveFreqDomain.TabIndex = 4;
             this.octaveFreqDomain.Text = "Octave";
-            title24.Name = "Octave band";
-            title24.Text = "Frequency domain";
-            this.octaveFreqDomain.Titles.Add(title24);
+            title19.Name = "Octave band";
+            title19.Text = "Frequency domain";
+            this.octaveFreqDomain.Titles.Add(title19);
             // 
             // lblCenterFrequency
             // 
@@ -555,17 +557,17 @@
             // 
             this.octavesVisualisation.BorderlineColor = System.Drawing.Color.Black;
             this.octavesVisualisation.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea23.Name = "ChartArea1";
-            this.octavesVisualisation.ChartAreas.Add(chartArea23);
+            chartArea16.Name = "ChartArea1";
+            this.octavesVisualisation.ChartAreas.Add(chartArea16);
             this.octavesVisualisation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.octavesVisualisation.Location = new System.Drawing.Point(0, 0);
             this.octavesVisualisation.Name = "octavesVisualisation";
             this.octavesVisualisation.Size = new System.Drawing.Size(610, 301);
             this.octavesVisualisation.TabIndex = 3;
             this.octavesVisualisation.Text = "Octave visualisation";
-            title23.Name = "Octaves";
-            title23.Text = "Octaves";
-            this.octavesVisualisation.Titles.Add(title23);
+            title16.Name = "Octaves";
+            title16.Text = "Octaves";
+            this.octavesVisualisation.Titles.Add(title16);
             // 
             // tabPageSensors
             // 
@@ -628,22 +630,22 @@
             // 
             this.sensorReadings.BorderlineColor = System.Drawing.Color.Black;
             this.sensorReadings.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea25.Name = "ChartArea1";
-            this.sensorReadings.ChartAreas.Add(chartArea25);
+            chartArea20.Name = "ChartArea1";
+            this.sensorReadings.ChartAreas.Add(chartArea20);
             this.sensorReadings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sensorReadings.Location = new System.Drawing.Point(0, 0);
             this.sensorReadings.Name = "sensorReadings";
-            series20.ChartArea = "ChartArea1";
-            series20.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series20.Color = System.Drawing.Color.Blue;
-            series20.Name = "Readings";
-            this.sensorReadings.Series.Add(series20);
+            series16.ChartArea = "ChartArea1";
+            series16.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series16.Color = System.Drawing.Color.Blue;
+            series16.Name = "Readings";
+            this.sensorReadings.Series.Add(series16);
             this.sensorReadings.Size = new System.Drawing.Size(610, 301);
             this.sensorReadings.TabIndex = 3;
             this.sensorReadings.Text = "Sensor readings";
-            title25.Name = "Title1";
-            title25.Text = "Sensor readings";
-            this.sensorReadings.Titles.Add(title25);
+            title20.Name = "Title1";
+            title20.Text = "Sensor readings";
+            this.sensorReadings.Titles.Add(title20);
             // 
             // menuStrip
             // 
@@ -734,7 +736,7 @@
             // timer
             // 
             this.timer.Enabled = true;
-            this.timer.Interval = 500;
+            this.timer.Interval = 300;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // MainForm

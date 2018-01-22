@@ -45,7 +45,7 @@ namespace NoiseMeasurement.Filters
             short[][] samplesArray = thirdOctave ? ThirdOctaveBandOutput : OctaveBandOutput;
             filter filter = thirdOctave ? new filter(ThirdOctaveBandScalerFilter) :  new filter(OctaveBandScalerFilter);
 
-            freqsArray[band] = new Complex32[frequencyDomain.Length];
+            freqsArray[band] = new Complex32[FrequencyDomain.Length];
             samplesArray[band] = new short[input.Length];
             currentFrequencyIndex = band;
 

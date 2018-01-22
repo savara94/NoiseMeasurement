@@ -95,6 +95,8 @@ namespace NoiseMeasurement
 
             timeDomain.ChartAreas[0].AxisY.Maximum = short.MaxValue;
             timeDomain.ChartAreas[0].AxisY.Minimum = short.MinValue;
+            sensorReadings.ChartAreas[0].AxisY.Maximum = 140;
+            sensorReadings.ChartAreas[0].AxisY.Minimum = 0;
 
             recording.IsRecording = true;
         }
@@ -242,8 +244,10 @@ namespace NoiseMeasurement
 
             filters = new Filters.Filters(wavSamples);
             FillComboboxFreq(false);
-            UpdateFreqDomain(filters.frequencyDomain);
+            UpdateFreqDomain(filters.FrequencyDomain);
             toBePlayed = filters.input;
+            splitContainer.Enabled = true;
+            splitContainer1.Enabled = true;
         }
 
         #endregion
@@ -273,18 +277,18 @@ namespace NoiseMeasurement
 
                 if (ReferenceEquals(btn, radioNone))
                 {
-                    UpdateFreqDomain(filters.frequencyDomain);
+                    UpdateFreqDomain(filters.FrequencyDomain);
                     toBePlayed = filters.input;
                 }
                 else if (ReferenceEquals(btn, radioAfilter))
                 {
-                    UpdateFreqDomain(filters.AWeightedFreq);
-                    toBePlayed = filters.AWeightedOutput;
+                    UpdateFreqDomain(filters.AWeightFilterFrequency);
+                    toBePlayed = filters.AWeightFilterOutput;
                 }
                 else if (ReferenceEquals(btn, radioCfilter))
                 {
-                    UpdateFreqDomain(filters.CWeightedFreq);
-                    toBePlayed = filters.CWeightedOutput;
+                    UpdateFreqDomain(filters.CWeightFilterFrequency);
+                    toBePlayed = filters.CWeightFilterOutput;
 
                 }
                 else if (ReferenceEquals(btn, radioBtnOctave))
@@ -351,10 +355,11 @@ namespace NoiseMeasurement
 
         private void comboBoxFreq_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Complex32[][] freq = radioBtnThirdOctave.Checked ? filters.ThirdOctaveBandFreqs : filters.OctaveBandFreqs;
+            var thirdOctave = radioBtnThirdOctave.Checked;
             var band = comboBoxFreq.SelectedIndex;
-            toBePlayed = radioBtnThirdOctave.Checked ? filters.ThirdOctaveBandOutput[band] : filters.OctaveBandOutput[band];
-            UpdateOctaveFreqDomain(freq[band]);
+            Complex32[] freq = filters.GetOctaveFilterFrequency(band, thirdOctave);
+            toBePlayed = filters.GetOctaveFilterOutput(band, thirdOctave);
+            UpdateOctaveFreqDomain(freq);
         }
 
         private void comboBoxTimeWeight_SelectedIndexChanged(object sender, EventArgs e)
@@ -379,10 +384,10 @@ namespace NoiseMeasurement
         private void GetDevicesLocations()
         {
             var locations = dbUpdater.GetDeviceLocations();
+            markersOverlay = new GMapOverlay("markers");
             foreach (var location in locations)
             {
-                markersOverlay = new GMapOverlay("markers");
-                GMarkerGoogle marker = new GMarkerGoogle(deviceGeoLocation, GMarkerGoogleType.red);
+                GMarkerGoogle marker = new GMarkerGoogle(location, GMarkerGoogleType.red);
                 marker.ToolTipText = "Click to show device readings.";
                 markersOverlay.Markers.Add(marker);
                 gMap.Overlays.Add(markersOverlay);
@@ -435,20 +440,27 @@ namespace NoiseMeasurement
             }
             var readings = dbUpdater.GetNewReadings(SelectedDeviceLocation, timestampForDbUpdate);
 
+            if (readings.Count == 0)
+            {
+                return;
+            }
+
             sensorReadings.Invoke((MethodInvoker)delegate
             {
                 var points = sensorReadings.Series["Readings"].Points;
+                while(points.Count > 500)
+                {
+                    points.RemoveAt(0);
+                }
+
                 foreach (var reading in readings)
                 {
-                   if (points.Count == 10000)
-                    {
-                        points.RemoveAt(0);
-                    }
                    points.AddY(reading);
                 }
             });
 
             timestampForDbUpdate = DateTime.Now;
+            timestampForDbUpdate.AddMilliseconds(-250);
         }
 
         private void gMap_MouseClick(object sender, MouseEventArgs e)
