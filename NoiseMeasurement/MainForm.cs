@@ -98,7 +98,13 @@ namespace NoiseMeasurement
             sensorReadings.ChartAreas[0].AxisY.Maximum = 140;
             sensorReadings.ChartAreas[0].AxisY.Minimum = 0;
 
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             recording.IsRecording = true;
+        }
+
+        private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Console.WriteLine(e.ExceptionObject.ToString());
         }
 
         private void UpdateTimeDomain(short[] buffer)
@@ -147,7 +153,14 @@ namespace NoiseMeasurement
                 lblLeqValue.Text = ((int)(measured_noise)).ToString() + " dB";
             });
 
-            dbUpdater.InsertReading(measured_noise);
+            try
+            {
+                dbUpdater.InsertReading(measured_noise);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         #region Calibration
@@ -246,8 +259,8 @@ namespace NoiseMeasurement
             FillComboboxFreq(false);
             UpdateFreqDomain(filters.FrequencyDomain);
             toBePlayed = filters.input;
-            splitContainer.Enabled = true;
-            splitContainer1.Enabled = true;
+            splitContainerFilters.Enabled = true;
+            splitContainerOctavebands.Enabled = true;
         }
 
         #endregion
@@ -440,7 +453,7 @@ namespace NoiseMeasurement
             }
             var readings = dbUpdater.GetNewReadings(SelectedDeviceLocation, timestampForDbUpdate);
 
-            if (readings.Count == 0)
+            if (readings == null || readings.Count == 0)
             {
                 return;
             }

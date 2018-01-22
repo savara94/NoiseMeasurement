@@ -14,6 +14,9 @@ namespace NoiseMeasurement.DB
     public class DBUpdater
     {
         private PointLatLng thisDeviceLocation;
+        private PointLatLng monitoredDeviceLocation;
+        private GeoLocation thisGeolocation;
+        private GeoLocation monitoredGeolocation;
 
         public DBUpdater(PointLatLng location)
         {
@@ -36,6 +39,10 @@ namespace NoiseMeasurement.DB
                 // New needs to be inserted
                 MakeNewDeviceLocation(gpslocation);
             }
+            else
+            {
+                thisGeolocation = geoLocationSuggestions[0];
+            }
         }
 
         public List<PointLatLng> GetDeviceLocations()
@@ -56,31 +63,30 @@ namespace NoiseMeasurement.DB
             return points;
         }
 
-        public void InsertReading(double decibels)
+        public async void InsertReading(double decibels)
         {
-            NoiseMeterContext context;
-            GeoLocation location = FindLocation(thisDeviceLocation, out context);
             DeviceReadings readings = new DeviceReadings()
             {
-                GeoLocationID = location.GeoLocationID,
+                GeoLocationID = thisGeolocation.GeoLocationID,
                 Noise = decibels,
                 Timestamp = DateTime.Now
             };
 
-            location.DeviceReadings.Add(readings);
-
-            var entity = context.GeoLocations.Find(location.GeoLocationID);
-            context.Entry(entity).CurrentValues.SetValues(location);
-            context.DeviceReadings.Add(readings);
-            context.SaveChanges();
-            context.Dispose();
+            using (var context = new NoiseMeterContext())
+            {
+                context.DeviceReadings.Add(readings);
+                await context.SaveChangesAsync();
+            }
         }
 
-        private GeoLocation FindLocation(PointLatLng deviceLocation, out NoiseMeterContext context)
+        private GeoLocation FindLocation(PointLatLng deviceLocation)
         {
             List<GeoLocation> list;
-            context = new NoiseMeterContext();
-            list = context.GeoLocations.ToList();
+            using (var context = new NoiseMeterContext())
+            {
+                list = context.GeoLocations.ToList();
+            }
+
             double lat = deviceLocation.Lat;
             double lng = deviceLocation.Lng;
             string wkt = $"POINT({lng} {lat})";
@@ -105,28 +111,40 @@ namespace NoiseMeasurement.DB
 
         public List<double> GetNewReadings(PointLatLng deviceLocation, DateTime filter)
         {
-            NoiseMeterContext context;
-            var geolocation = FindLocation(deviceLocation, out context);
+            try
+            {
+                if (!deviceLocation.Equals(monitoredDeviceLocation))
+                {
+                    monitoredDeviceLocation = deviceLocation;
+                    monitoredGeolocation = FindLocation(monitoredDeviceLocation);
+                }
+                List<double> readings;
+                using (var context = new NoiseMeterContext())
+                {
+                    readings = (from reading in context.DeviceReadings
+                                where reading.GeoLocationID == monitoredGeolocation.GeoLocationID && reading.Timestamp > filter
+                                select reading.Noise).ToList();
+                }
 
-            List<double> readings = (from value in geolocation.DeviceReadings
-                                     where value.Timestamp > filter
-                                     select value.Noise).ToList();
-
-            context.Dispose();
-
-            return readings;
+                return readings;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
 
         private void MakeNewDeviceLocation(DbGeography gpsLocation)
         {
-            var currentGeoLocation = new GeoLocation()
+            thisGeolocation = new GeoLocation()
             {
                 Location = gpsLocation,
             };
 
             using (var context = new NoiseMeterContext())
             {
-                context.GeoLocations.Add(currentGeoLocation);
+                context.GeoLocations.Add(thisGeolocation);
                 context.SaveChanges();
             }
         }
