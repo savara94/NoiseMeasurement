@@ -10,6 +10,7 @@ using NoiseMeasurement.SoundProviders;
 using System;
 using System.Device.Location;
 using System.Drawing;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -27,6 +28,7 @@ namespace NoiseMeasurement
         private CalibrationParams CalibrationParams;
 
         private short[] wavSamples;
+        private WaveFormat format;
         private int wavSampleRate;
         private int vuMeterCntr;
         private short[] toBePlayed;
@@ -207,6 +209,7 @@ namespace NoiseMeasurement
                     return false;
                 }
 
+                format = reader.WaveFormat;
                 wavSampleRate = reader.WaveFormat.SampleRate;
                 bool stereo = false;
 
@@ -265,8 +268,10 @@ namespace NoiseMeasurement
             FillComboboxFreq(false);
             UpdateFreqDomain(filters.FrequencyDomain);
             toBePlayed = filters.input;
+            saveToolStripMenuItem.Enabled = true;
             splitContainerFilters.Enabled = true;
             splitContainerOctavebands.Enabled = true;
+            octavesVisualisation.Series.Clear();
             octavesVisualisation.ChartAreas[0].AxisX.Minimum = 0;
             octavesVisualisation.ChartAreas[0].AxisX.Maximum = 40000;
         }
@@ -530,6 +535,24 @@ namespace NoiseMeasurement
                     sensorReadings.Series["Readings"].Points.Clear();
                     timestampForDbUpdate = DateTime.MinValue;
                     break;
+                }
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog savefile = new SaveFileDialog();
+            // set a default file name
+            savefile.FileName = "output.wav";
+            // set filters - this can be done in properties as well
+            savefile.Filter = "Wav files (*.wav)|*.wav";
+
+            if (savefile.ShowDialog() == DialogResult.OK)
+            {
+                var stream = new FileStream(savefile.FileName, FileMode.CreateNew);
+                using (WaveFileWriter writer = new WaveFileWriter(stream, format))
+                {
+                    writer.WriteSamples(toBePlayed, 0, toBePlayed.Length);
                 }
             }
         }
