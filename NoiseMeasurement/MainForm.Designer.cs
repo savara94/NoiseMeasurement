@@ -87,8 +87,8 @@
             this.lblLavg = new System.Windows.Forms.Label();
             this.lblLeq = new System.Windows.Forms.Label();
             this.lblNoise = new System.Windows.Forms.Label();
-            this.timeDomain = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.vuMeter = new VU_MeterLibrary.VuMeter();
+            this.timeDomain = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl.SuspendLayout();
             this.tabPageMain.SuspendLayout();
             this.tabPageWeightFilters.SuspendLayout();
@@ -672,27 +672,6 @@
             this.lblNoise.Text = "0";
             this.lblNoise.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // timeDomain
-            // 
-            this.timeDomain.BorderlineColor = System.Drawing.Color.Black;
-            this.timeDomain.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea1.Name = "ChartArea1";
-            this.timeDomain.ChartAreas.Add(chartArea1);
-            this.timeDomain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.timeDomain.Location = new System.Drawing.Point(0, 0);
-            this.timeDomain.Name = "timeDomain";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Color = System.Drawing.Color.Blue;
-            series1.Name = "Samples";
-            this.timeDomain.Series.Add(series1);
-            this.timeDomain.Size = new System.Drawing.Size(610, 210);
-            this.timeDomain.TabIndex = 2;
-            this.timeDomain.Text = "Time domain";
-            title1.Name = "Title1";
-            title1.Text = "Time domain";
-            this.timeDomain.Titles.Add(title1);
-            // 
             // vuMeter
             // 
             this.vuMeter.AnalogMeter = true;
@@ -738,6 +717,27 @@
             this.vuMeter.UseLedLight = false;
             this.vuMeter.VerticalBar = false;
             this.vuMeter.VuText = "dB";
+            // 
+            // timeDomain
+            // 
+            this.timeDomain.BorderlineColor = System.Drawing.Color.Black;
+            this.timeDomain.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+            chartArea1.Name = "ChartArea1";
+            this.timeDomain.ChartAreas.Add(chartArea1);
+            this.timeDomain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.timeDomain.Location = new System.Drawing.Point(0, 0);
+            this.timeDomain.Name = "timeDomain";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Color = System.Drawing.Color.Blue;
+            series1.Name = "Samples";
+            this.timeDomain.Series.Add(series1);
+            this.timeDomain.Size = new System.Drawing.Size(610, 210);
+            this.timeDomain.TabIndex = 2;
+            this.timeDomain.Text = "Time domain";
+            title1.Name = "Title1";
+            title1.Text = "Time domain";
+            this.timeDomain.Titles.Add(title1);
             // 
             // MainForm
             // 

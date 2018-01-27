@@ -9,9 +9,11 @@ using NoiseMeasurement.DB;
 using NoiseMeasurement.SoundProviders;
 using System;
 using System.Device.Location;
+using System.Drawing;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml.Linq;
 
 namespace NoiseMeasurement
@@ -92,6 +94,10 @@ namespace NoiseMeasurement
             octaveFreqDomain.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
             octaveFreqDomain.ChartAreas[0].CursorX.AutoScroll = true;
             octaveFreqDomain.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
+
+            octavesVisualisation.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            octavesVisualisation.ChartAreas[0].CursorX.AutoScroll = true;
+            octavesVisualisation.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
 
             timeDomain.ChartAreas[0].AxisY.Maximum = short.MaxValue;
             timeDomain.ChartAreas[0].AxisY.Minimum = short.MinValue;
@@ -261,6 +267,8 @@ namespace NoiseMeasurement
             toBePlayed = filters.input;
             splitContainerFilters.Enabled = true;
             splitContainerOctavebands.Enabled = true;
+            octavesVisualisation.ChartAreas[0].AxisX.Minimum = 0;
+            octavesVisualisation.ChartAreas[0].AxisX.Maximum = 40000;
         }
 
         #endregion
@@ -307,15 +315,33 @@ namespace NoiseMeasurement
                 else if (ReferenceEquals(btn, radioBtnOctave))
                 {
                     FillComboboxFreq(false);
+                    HideOctaves(true);
                 }
                 else if (ReferenceEquals(btn, radioBtnThirdOctave))
                 {
                     FillComboboxFreq(true);
+                    HideOctaves(false);
                 }
             }
             else
             {
                 return;
+            }
+        }
+
+        private void HideOctaves(bool thirdOctave)
+        {
+            string prefix = thirdOctave ? "thirdOctave" : "octave";
+            foreach (var series in octavesVisualisation.Series)
+            {
+                if (series.Name.StartsWith(prefix))
+                {
+                    series.Enabled = false;
+                }
+                else
+                {
+                    series.Enabled = true;
+                }
             }
         }
 
@@ -370,8 +396,25 @@ namespace NoiseMeasurement
         {
             var thirdOctave = radioBtnThirdOctave.Checked;
             var band = comboBoxFreq.SelectedIndex;
+            string prefix = thirdOctave ? "thirdOctave" : "octave";
+            string seriesName = prefix + band;
+
             Complex32[] freq = filters.GetOctaveFilterFrequency(band, thirdOctave);
             toBePlayed = filters.GetOctaveFilterOutput(band, thirdOctave);
+
+            if (octavesVisualisation.Series.FindByName(seriesName) == null)
+            {
+                octavesVisualisation.Series.Add(seriesName);
+                int count = octavesVisualisation.Series.Count;
+                octavesVisualisation.Series[seriesName].ChartType = SeriesChartType.Line;
+                octavesVisualisation.Series[seriesName].BorderWidth = 5;
+                foreach (var pt in freq)
+                {
+                    octavesVisualisation.Series[seriesName].Points.AddY(pt.Magnitude);
+                }
+                octavesVisualisation.ChartAreas[0].RecalculateAxesScale();
+            }
+
             UpdateOctaveFreqDomain(freq);
         }
 
@@ -461,14 +504,14 @@ namespace NoiseMeasurement
             sensorReadings.Invoke((MethodInvoker)delegate
             {
                 var points = sensorReadings.Series["Readings"].Points;
-                while(points.Count > 500)
+                while (points.Count > 500)
                 {
                     points.RemoveAt(0);
                 }
 
                 foreach (var reading in readings)
                 {
-                   points.AddY(reading);
+                    points.AddY(reading);
                 }
             });
 
