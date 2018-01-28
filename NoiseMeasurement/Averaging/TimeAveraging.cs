@@ -52,7 +52,7 @@ namespace NoiseMeasurement.Averaging
                 for(int i = 0; i < currentValues.Length; i++)
                 {
                     alfa = GetAlfa(timeWeightings[i]);
-                    currentValues[i] = (1 - alfa) * Math.Abs(sample) + alfa * previousValues[i];
+                    currentValues[i] = (1 - alfa) * Math.Abs((double)sample) + alfa * previousValues[i];
                     previousValues[i] = currentValues[i];
                 }
             }
@@ -66,7 +66,7 @@ namespace NoiseMeasurement.Averaging
             double calibrated_sample = CalibrationParams.Sample;
             double calibrated_noise = CalibrationParams.Noise;
 
-            double lavg = calibrated_noise + 10.0 * Math.Log10((double)currentValues[TimeWeightIndex] / calibrated_sample);
+            double lavg = calibrated_noise + 10.0 * Math.Log10(currentValues[TimeWeightIndex] / calibrated_sample);
             double Tn = 8.0 / Math.Pow(2, (lavg - 90) / 5.0);
             var time_diff = currentTime - timestamp;
             Dose += 100 * time_diff.TotalSeconds / Tn;

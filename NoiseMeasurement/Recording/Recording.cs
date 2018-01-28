@@ -55,12 +55,17 @@ namespace NoiseMeasurement.Recording
 
                 for (int i = 0; i < args.BytesRecorded; i += moduo * 2)
                 {
-                    short sample = (short)((buffer[i + 1] << 8) | buffer[i]);
+                    short sample = 0;
+
+                    sample = (short)((buffer[i + 1] << 8) | buffer[i]);
                     samplesToGiveBuffer[cntr++] = sample;
                 }
 
+
                 OnDataAvaliable?.Invoke(samplesToGiveBuffer);
+
             }
+
         }
     }
 }
