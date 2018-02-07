@@ -17,6 +17,8 @@ namespace NoiseMeasurement.Filters
         private short[][] ThirdOctaveBandOutput;
 
         public Complex32[] FrequencyDomain;
+        private short max_sample;
+        private short min_sample;
         private Complex32[][] OctaveBandFreqs;
         private Complex32[][] ThirdOctaveBandFreqs;
         private Complex32[] AWeightedFreq;
@@ -101,6 +103,15 @@ namespace NoiseMeasurement.Filters
         public Filters(short[] input)
         {
             this.input = input;
+            max_sample = short.MinValue;
+
+            foreach(var sample in input)
+            {
+                if (sample > max_sample)
+                {
+                    max_sample = sample;
+                }
+            }
             ThirdOctaveBandFreqs = new Complex32[ThirdOctaveBandCenterFrequencies.Length][];
             ThirdOctaveBandOutput = new short[ThirdOctaveBandCenterFrequencies.Length][];
 
@@ -112,6 +123,7 @@ namespace NoiseMeasurement.Filters
 
         private void GenerateFilterOutputs(Complex32[] frequencies, short[] timeDomainSamples, filter filter)
         {
+            
             for (int i = 1; i < frequencies.Length; i++)
             {
                 float scale = filter(i);
@@ -125,6 +137,8 @@ namespace NoiseMeasurement.Filters
             }
 
             MathNet.Numerics.IntegralTransforms.Fourier.Inverse(inverseinput, MathNet.Numerics.IntegralTransforms.FourierOptions.Default);
+            short max_sample_filtered = short.MinValue;
+
             for (int i = 0; i < timeDomainSamples.Length; i++)
             {
                 float sample = inverseinput[i].Real;
@@ -141,6 +155,18 @@ namespace NoiseMeasurement.Filters
                 {
                     timeDomainSamples[i] = (short)sample;
                 }
+
+                if (timeDomainSamples[i] > max_sample_filtered)
+                {
+                    max_sample_filtered = timeDomainSamples[i];
+                }
+            }
+
+            float scale_factor = 1.0f * max_sample / max_sample_filtered;
+
+            for(int i = 0; i < timeDomainSamples.Length; i++)
+            {
+                timeDomainSamples[i] = (short)(timeDomainSamples[i] * scale_factor);
             }
         }
 

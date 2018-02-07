@@ -549,7 +549,7 @@ namespace NoiseMeasurement
 
             if (savefile.ShowDialog() == DialogResult.OK)
             {
-                var stream = new FileStream(savefile.FileName, FileMode.CreateNew);
+                var stream = new FileStream(savefile.FileName, FileMode.Create);
                 using (WaveFileWriter writer = new WaveFileWriter(stream, format))
                 {
                     writer.WriteSamples(toBePlayed, 0, toBePlayed.Length);
