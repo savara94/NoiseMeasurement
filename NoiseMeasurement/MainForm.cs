@@ -148,7 +148,7 @@ namespace NoiseMeasurement
             double calibrated_noise = CalibrationParams.Noise;
             short measured_sample = (short)rms;
 
-            double measured_noise = calibrated_noise + 10.0 * Math.Log10((double)measured_sample / calibrated_sample);
+            double measured_noise = calibrated_noise + 20.0 * Math.Log10((double)measured_sample / calibrated_sample);
             vuMeter.Level = (int)measured_noise;
 
             lblNoise.Invoke((MethodInvoker)delegate
